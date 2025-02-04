@@ -20,13 +20,14 @@ Its just the basic functionallity, but more feauture will be added.
 
 # To be added (or already added :P)
 
-1. A nicer UI
-2. Selection multiple devices, both input and output (loopback) not defaulting just to default output device.
-3. A way to capture audio to bit stream , so no need for file
-4. A nicer animation
-5. More info on window
-6. Check to not crash if not treated well
-7. A LINK!
+1. Transfer the Recognition process to a new thread for not hanging the whole app. 
+2. A nicer UI
+3. Selection multiple devices, both input and output (loopback) not defaulting just to default output device.
+4. A way to capture audio to bit stream , so no need for file
+5. A nicer animation
+6. More info on window
+7. Check to not crash if not treated well
+8. A LINK!
 ... more.
 
 # Thoughts
