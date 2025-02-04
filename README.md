@@ -12,7 +12,7 @@ All the other solutions was to capture audio from input devices, and i had to ma
 ## What it does (for now v.0.1)
 
 It just detects the audio from speakers (loopback) , (it only detects the default output device, and search for its loopback device)
-records it to a small wav file and send it using Shazamio package library 
+records it to a small wav file and send it using Shazamio package library (https://github.com/shazamio/ShazamIO)
 and returns a window with info.
 
 Its just the basic functionallity, but more feauture will be added.
@@ -35,4 +35,4 @@ It will be ported to an all-in-one .exe for usage on any windows machines.
 
 # Why PYTHON then and not C#
 
-The library need for identification Shazamio was only written in Python , else the C# will be preferred. 
+The library need for identification Shazamio (https://github.com/shazamio/ShazamIO ) was only written in Python , else the C# will be preferred. 
