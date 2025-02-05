@@ -9,6 +9,22 @@ The answer is located that i sit in PC for work a lot of hours, and many many ti
 
 All the other solutions was to capture audio from input devices, and i had to make a whole procedure on looping my output, through a audio mix, and outputing in a virtual input (voicemeeter is called the software , take a look, very powerful)
 
+# Building
+
+Building yourself (or look in Releases:)
+## Installation
+
+Before running the application, you need to install the required Python packages. You can install all necessary packages using pip:
+
+```pip install numpy requests Pillow pydub simpleaudio ffmpeg-python shazamio```
+
+build command for Windows:
+
+```pip install pyinstaller```
+
+```pyinstaller --onefile --windowed --icon=icon.ico --add-data "icon.ico;." --add-data "shaza_logo.png;." --add-data "shaza_anim.gif;." --name "SongIdentifier" shazam.py```
+
+
 ## What it does (~~for now v.0.1~~) v1.0:
 
 Should also add images and screenshots:
