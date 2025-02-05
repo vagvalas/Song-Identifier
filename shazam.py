@@ -47,14 +47,14 @@ class ShazamApp:
         
         # Create UI widgets
         self.create_widgets()
-        #self.load_animation(resource_path("shaza_anim.gif"))  # Load the animation frames
+        self.load_animation(resource_path("shaza_anim.gif"))  # Load the animation frames
         # Set default device if it's available in the loopback list
         if any(device[0] == self.default_device for device in self.loopback_devices):
             self.selected_device.set(self.default_device)
         elif self.loopback_devices:
             # Set the fallback to the name of the first loopback device
             self.selected_device.set(self.loopback_devices[0][0])  # Access the first element's name
-    
+
 
     def create_widgets(self):
         label = ttk.Label(self.root, text="Select Audio Source:")
@@ -62,6 +62,7 @@ class ShazamApp:
 
         # Prepare device list with separators for categories
         loopback_device_names = [device[0] for device in self.loopback_devices]  # Extract names from loopback devices
+        #input_device_names = [device[0] for device in self.input_devices]  # Extract names from input devices
 
         # Combine the lists with headers for each category
         device_list = ["---LOOPBACK DEVICES---"] + loopback_device_names
@@ -77,7 +78,7 @@ class ShazamApp:
         resized_image = original_image.resize((200, 200), Image.Resampling.LANCZOS)
         self.shazam_logo = ImageTk.PhotoImage(resized_image)
         
-        self.recognize_button = ttk.Button(self.root, text="Recognize", command=self.start_recognition)
+        self.recognize_button = ttk.Button(self.root, image=self.shazam_logo, command=self.start_recognition)
         self.recognize_button.pack(pady=20)
 
     def get_device_index_by_name(self, device_name):
@@ -87,6 +88,28 @@ class ShazamApp:
         return None  # Return None if not found
 
     # Note: In 'get_audio_devices', ensure 'default_device_name' is correctly identified and appended with '[Loopback]' if needed.
+    def load_animation(self, gif_path):
+        """Load all frames of the animated GIF into a list."""
+        self.gif_frames = []
+        frame_index = 0
+        while True:
+            try:
+                frame = PhotoImage(file=gif_path, format=f"gif -index {frame_index}")
+                self.gif_frames.append(frame)
+                frame_index += 1
+            except:
+                break  # Stop loading when no more frames are available
+
+    def animate(self, frame_index=0):
+        """Loop through GIF frames to animate the button image."""
+        if self.animating:
+            frame = self.gif_frames[frame_index % len(self.gif_frames)]
+            self.recognize_button.config(image=frame)
+            self.recognize_button.image = frame  # Prevent garbage collection
+            self.root.after(100, self.animate, frame_index + 1)
+        else:
+            self.recognize_button.config(image=self.shazam_logo)  # Reset to PNG
+
     def get_audio_devices(self):
         p = pyaudio.PyAudio()
         loopback_devices = []
@@ -121,6 +144,7 @@ class ShazamApp:
             device_name = self.device_dropdown.get()
             device_index = self.get_device_index_by_name(device_name)
             capturing_device = p.get_device_info_by_index(device_index)
+
 
             def callback(in_data, frame_count, time_info, status):
                 """Collects raw audio frames from the stream."""
@@ -162,6 +186,8 @@ class ShazamApp:
         self.display_result(result)
 
     def start_recognition(self):
+        self.animating = True
+        self.animate()  # Start animation
         def recognition_thread():
             asyncio.set_event_loop(asyncio.new_event_loop())
             audio_data = self.record_audio()
@@ -179,7 +205,7 @@ class ShazamApp:
             album = track.get("sections", [{}])[0].get("metadata", [{}])[0].get("text", "Unknown")
             year = next((m["text"] for m in track.get("sections", [{}])[0].get("metadata", []) if "year" in m.get("title", "").lower()), "Unknown")
             image_url = track.get("images", {}).get("coverarthq", "")
-            shazam_url = track.get("url", "")
+            shazam_url = track.get("url", "")  # Assuming the API provides a direct link
 
             self.show_info_popup(name, artist, album, year, image_url, shazam_url)
         else:
