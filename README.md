@@ -12,9 +12,10 @@ All the other solutions was to capture audio from input devices, and i had to ma
 
 ## What it does (~~for now v.0.1~~) v1.0:
 
-![Screenshot of Application]((https://github.com/vagvalas/Song-Identifier/blob/main/assets/Screenshot.png))
-![Screenshot of Application](https://github.com/vagvalas/Song-Identifier/blob/main/assets/screenshot1.png)
-![Screenshot of Application](https://github.com/vagvalas/Song-Identifier/blob/main/assets/screenshot2.png)
+![Screenshot](https://github.com/user-attachments/assets/3fc2f321-a4e8-4e4c-a42a-9f53c4c61fbb)
+![Screenshot1](https://github.com/user-attachments/assets/6290553b-ebe5-4f8e-a9f8-537ccc447d49)
+![Screenshot2](https://github.com/user-attachments/assets/955784df-f51f-4700-a77d-a4cf98c7a290)
+
 
 1. It loads and searches for default playback device (e.g. Speakers)
 2. It links it to the Loopback device (as it has the same name)
