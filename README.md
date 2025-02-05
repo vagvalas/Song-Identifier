@@ -9,23 +9,6 @@ The answer can be found that i sit in PC for work a lot of hours, and many many 
 
 All the other solutions was to capture audio from input devices, and i had to make a whole procedure on looping my output, through a audio mix, and outputing in a virtual input (voicemeeter is called the software , take a look, very powerful)
 
-# Building
-
-Building yourself (or look in Releases:)
-## Installation
-
-Before running the application, you need to install the required Python packages. You can install all necessary packages using pip:
-
-```pip install numpy requests Pillow pydub simpleaudio ffmpeg-python shazamio```
-
-build command for Windows:
-
-```pip install pyinstaller```
-
-```pyinstaller --onefile --windowed --icon=icon.ico --add-data "icon.ico;." --add-data "shaza_logo.png;." --add-data "shaza_anim.gif;." --name "SongIdentifier" shazam.py```
-
-COPY ASSETS FOLDER TO BUILD ELSE GONNA FAIL, COPY TO SAME DIR AS THE SCRIPT
-
 
 ## What it does (~~for now v.0.1~~) v1.0:
 
@@ -75,6 +58,23 @@ Crash-free , even on not selecting device, and error handling of no result and n
 ### Initial Release
 #### v0.1
 - Initial release
+
+# Building
+
+Building yourself (or look in Releases:)
+## Installation
+
+Before running the application, you need to install the required Python packages. You can install all necessary packages using pip:
+
+```pip install numpy requests Pillow pydub simpleaudio ffmpeg-python shazamio```
+
+build command for Windows:
+
+```pip install pyinstaller```
+
+COPY ASSETS FOLDER TO BUILD ELSE GONNA FAIL, COPY TO SAME DIR AS THE SCRIPT
+
+```pyinstaller --onefile --windowed --icon=icon.ico --add-data "icon.ico;." --add-data "shaza_logo.png;." --add-data "shaza_anim.gif;." --name "SongIdentifier" shazam.py```
 
 
 # To be added (or already added :P)
