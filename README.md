@@ -24,38 +24,40 @@ Crash-free , even on not selecting device, and error handling of no result and n
 
 ~~Its just the basic functionallity, but more feauture will be added.~~
 
-# Changelog:
+## Changelog
 
-v1.0:
---Code Cleanup
---Stable release
---All bug fixed. Now checks everything (even to not re-trigger the recognition once its started once)
+### v1.0
+- Code Cleanup
+- Stable release
+- All bugs fixed. Now checks everything (even to not re-trigger the recognition once it's started once)
 
-v0.4:
---Actually not start the recognition if selected_device is not a device
---Fixed "Year" tag always to Unknown, wrong location was searched.
---More infos in result window
---Add a play button as shazamio also fetches a preview audio of identified song
---Added Icon.ico to new popup window
---Lot of debug messages for me
+### v0.4
+- Actually not start the recognition if selected_device is not a device
+- Fixed "Year" tag always to Unknown, wrong location was searched.
+- More infos in result window
+- Add a play button as shazamio also fetches a preview audio of identified song
+- Added Icon.ico to new popup window
+- Lot of debug messages for me
 
-v0.3:
---Added Input devices
---Check to validate selection to not start if no device is seleted
+### v0.3
+- Added Input devices
+- Check to validate selection to not start if no device is selected
 
-v0.2.1:
---Added also image to button instead of "Recognize"
---Added animation when clicking the button
+### v0.2.1
+- Added also image to button instead of "Recognize"
+- Added animation when clicking the button
 
-## First major update 
-v0.2:
---Seperated thread for recognition
---Added detection for loopback devices
---Detched the wav file (converted to byte array)
---More infos on result window
+### First Major Update
+#### v0.2
+- Separated thread for recognition
+- Added detection for loopback devices
+- Detached the wav file (converted to byte array)
+- More infos on result window
 
-v0.1 (first commit):
---Initial release
+### Initial Release
+#### v0.1
+- Initial release
+
 
 # To be added (or already added :P)
 
