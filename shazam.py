@@ -25,7 +25,6 @@ import simpleaudio as sa
 # Global variables
 DURATION = 4  # Seconds to record
 CHUNK_SIZE = 512
-#FILENAME = "loopback_record.wav"
 
 def resource_path(relative_path):
     try:
@@ -48,31 +47,28 @@ class ShazamApp:
 
         # Initialize the Tkinter variable for the selected device
         self.selected_device = tk.StringVar(value="Select a device")
-        print("1") # debug for me
+
         # Create UI widgets
         self.create_widgets()
         self.load_animation(resource_path("shaza_anim.gif"))  # Load the animation frames
+
         # Set default device if it's available in the loopback list
         if any(device[0] == self.default_device for device in self.loopback_devices):
             self.selected_device.set(self.default_device)
-            print("3")
         elif self.loopback_devices:
-            # Set the fallback to the name of the first loopback device
             self.selected_device.set(self.loopback_devices[0][0])  # Access the first element's name
     
     def validate_selection(self, event):
         # Get the current selection from the combobox directly
         current_selection = self.device_dropdown.get()
-        print(f"Dropdown changed to: {current_selection}")  # Debug statement
 
         # Check if the selection is valid (not a separator)
         if "---" not in current_selection:
             self.selected_device.set(current_selection)
-            print(f"Valid device selected: {self.selected_device.get()}")  # Debug statement
         else:
             # Reset to default or prompt selection
             self.selected_device.set(self.default_device) #set the default again to not crash
-            print("Invalid selection, reset to default.")  # Debug statement
+            #here was the "Select a device" message to force user Line: 203
 
     def create_widgets(self):
         label = ttk.Label(self.root, text="Select Audio Source:")
@@ -84,15 +80,13 @@ class ShazamApp:
 
         # Combine the lists with headers for each category
         device_list = ["---LOOPBACK DEVICES---"] + loopback_device_names + ["---INPUT DEVICES---"] + input_device_names
-        print("2")
         self.device_dropdown = ttk.Combobox(self.root, textvariable=self.selected_device, values=device_list, state="readonly", width=60)
         self.device_dropdown.pack()
 
-
-        # Bind the selection event to validate_selection to handle updates
+        # Bind the selection event to validate_selection to update!
         self.device_dropdown.bind("<<ComboboxSelected>>", self.validate_selection)
 
-        #all for LOGO#
+        #Needed for LOGO#
         original_image = Image.open(resource_path("shaza_logo.png"))
         resized_image = original_image.resize((200, 200), Image.Resampling.LANCZOS)
         self.shazam_logo = ImageTk.PhotoImage(resized_image)
@@ -106,7 +100,6 @@ class ShazamApp:
                 return device[1]  # Return the index
         return None  # Return None if not found
 
-    # Note: In 'get_audio_devices', ensure 'default_device_name' is correctly identified and appended with '[Loopback]' if needed.
     def load_animation(self, gif_path):
         """Load all frames of the animated GIF into a list."""
         self.gif_frames = []
@@ -129,6 +122,7 @@ class ShazamApp:
         else:
             self.recognize_button.config(image=self.shazam_logo)  # Reset to PNG
 
+    
     def get_audio_devices(self):
         p = pyaudio.PyAudio()
         loopback_devices = []
@@ -137,12 +131,10 @@ class ShazamApp:
         try:
             wasapi_info = p.get_host_api_info_by_type(pyaudio.paWASAPI)
             default_output_device_info = p.get_device_info_by_index(wasapi_info["defaultOutputDevice"])
-            #print(default_output_device_info)
-            default_device = f"{default_output_device_info['name']} [Loopback]"
-            #print(default_device)
+            default_device = f"{default_output_device_info['name']} [Loopback]" #sketcy way
             for i in range(p.get_device_count()):
                 device_info = p.get_device_info_by_index(i)
-                if device_info['hostApi'] == wasapi_info['index'] and device_info['maxInputChannels'] > 0:
+                if device_info['hostApi'] == wasapi_info['index'] and device_info['maxInputChannels'] > 0: #the key was the InputChannels else is output device!
                     device_entry = [device_info['name'], i]  # Store name and index as a list
                     if device_info.get('isLoopbackDevice', False):
                         loopback_devices.append(device_entry)
@@ -198,7 +190,7 @@ class ShazamApp:
         audio_segment.export(wav_buffer, format="wav")
         wav_bytes = wav_buffer.getvalue()
 
-        return wav_bytes  # Return the processed WAV bytes
+        return wav_bytes  # Return the WAV bytes like it was a file
 
     async def recognize_song(self, audio_data):
         shazam = Shazam()
@@ -236,17 +228,15 @@ class ShazamApp:
                 year = sections[0]["metadata"][2].get("text", "Unknown")  # Accessing the third metadata item's text
             hub = result["track"].get("hub", {})
             actions = hub.get("actions", [])
-            
+            #URI PLAY
             uri = "Not found"  # Default if no matching uri is found
             for action in actions:
                 if action.get("type") == "uri":
                     uri = action.get("uri", "Not found")
                     break  # Stop searching once the uri is found
-
-            #print("URI:", uri)
             audio_uri = uri
             image_url = track.get("images", {}).get("coverarthq", "")
-            shazam_url = track.get("url", "")  # Assuming the API provides a direct link
+            shazam_url = track.get("url", "")
 
             self.show_info_popup(name, artist, album, year, image_url, shazam_url, audio_uri)
         else:
@@ -256,7 +246,7 @@ class ShazamApp:
         popup = tk.Toplevel(self.root)
         popup.title(name)
         popup.geometry("600x600")
-        popup.iconbitmap(resource_path("icon.ico")) #add also an icon
+        popup.iconbitmap(resource_path("icon.ico")) #added also an icon
         # Setup threading and audio control
         playback_thread = None
         play_obj = None
@@ -323,7 +313,6 @@ class ShazamApp:
         # Button frame for side-by-side layout
         button_frame = ttk.Frame(popup)
         button_frame.pack(pady=10, fill=tk.X)
-
         preview_button = ttk.Button(button_frame, text="Preview", command=start_playback)
         preview_button.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=5)
 
