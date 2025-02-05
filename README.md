@@ -3,7 +3,7 @@ Match any song which playing through your pc speakers and more
 
 # WHY?
 
-The answer is located that i sit in PC for work a lot of hours, and many many times, i listen to some local radio, which is just a stream , and want to know whats the song called.
+The answer can be found that i sit in PC for work a lot of hours, and many many times, i listen to some local radio, which is just a stream , and want to know whats the song called.
 
 # Competitors
 
@@ -85,6 +85,7 @@ Crash-free , even on not selecting device, and error handling of no result and n
 6. More info on window (v0.4)
 7. Check to not crash if not treated well (bugs in all versions) (v0.4, and v1.0)
 8. A LINK! (v0.2)
+9. TRYING to add a duration for playing audio preview (if you can implement this feel free to PR)
 ... more.
 
 # Thoughts
