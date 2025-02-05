@@ -12,7 +12,7 @@ All the other solutions was to capture audio from input devices, and i had to ma
 
 ## What it does (~~for now v.0.1~~) v1.0:
 
-![Screenshot of Application](https://github.com/vagvalas/Song-Identifier/blob/main/assets/screenshot.png)
+![Screenshot of Application]((https://github.com/vagvalas/Song-Identifier/blob/main/assets/Screenshot.png))
 ![Screenshot of Application](https://github.com/vagvalas/Song-Identifier/blob/main/assets/screenshot1.png)
 ![Screenshot of Application](https://github.com/vagvalas/Song-Identifier/blob/main/assets/screenshot2.png)
 
