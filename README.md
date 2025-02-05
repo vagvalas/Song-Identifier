@@ -12,7 +12,10 @@ All the other solutions was to capture audio from input devices, and i had to ma
 
 ## What it does (~~for now v.0.1~~) v1.0:
 
-Should also add images and screenshots:
+![Screenshot of Application](https://github.com/vagvalas/Song-Identifier/blob/main/assets/screenshot.png)
+![Screenshot of Application](https://github.com/vagvalas/Song-Identifier/blob/main/assets/screenshot1.png)
+![Screenshot of Application](https://github.com/vagvalas/Song-Identifier/blob/main/assets/screenshot2.png)
+
 1. It loads and searches for default playback device (e.g. Speakers)
 2. It links it to the Loopback device (as it has the same name)
 3. The button trigers the record audio to an array (4 seconds) and then sends to api to recognize
