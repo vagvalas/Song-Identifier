@@ -66,7 +66,7 @@ class ShazamApp:
             print(f"Valid device selected: {self.selected_device.get()}")  # Debug statement
         else:
             # Reset to default or prompt selection
-            self.device_dropdown.set("Select a device")
+            self.device_dropdown.set(self.default_device) #set the default again to not crash
             print("Invalid selection, reset to default.")  # Debug statement
 
     def create_widgets(self):
