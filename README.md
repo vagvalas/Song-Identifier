@@ -22,13 +22,12 @@ Its just the basic functionallity, but more feauture will be added.
 v.0.2.1
 --Added also image to button instead of "Recognize"
 --Added animation when clicking the button
-##First major update v0.2
+
+## First major update 
+v0.2
 --Added detection for loopback devices
 --Detched the wav file (converted to byte array)
 --More infos on result window
-
-
-
 
 # To be added (or already added :P)
 
