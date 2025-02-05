@@ -3,11 +3,11 @@ Match any song which playing through your pc speakers and more
 
 # WHY?
 
-The answer can be found that i sit in PC for work a lot of hours, and many many times, i listen to some local radio, which is just a stream , and want to know whats the song called.
+The answer can be found that i sit a lot of hours in front of a PC for work, and many many times, i listen to some local radio, which is just a stream , and want to know how the song is named.
 
 # Competitors
 
-All the other solutions was to capture audio from input devices, and i had to make a whole procedure on looping my output, through a audio mix, and outputing in a virtual input (voicemeeter is called the software , take a look, very powerful)
+All the other solutions was to capture audio from input devices, and i had to make a whole procedure on looping my output, through an audio mix, and outputing in a virtual input (voicemeeter is called the software https://vb-audio.com/Voicemeeter/, take a look, very powerful)
 
 
 ## What it does (~~for now v.0.1~~) v1.0:
