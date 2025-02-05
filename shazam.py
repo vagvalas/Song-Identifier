@@ -51,6 +51,7 @@ class ShazamApp:
         # Create UI widgets
         self.create_widgets()
         self.load_animation(resource_path("shaza_anim.gif"))  # Load the animation frames
+        self.is_recognizing = False  # Add a flag to track if recognition is active
 
         # Set default device if it's available in the loopback list
         if any(device[0] == self.default_device for device in self.loopback_devices):
@@ -172,6 +173,8 @@ class ShazamApp:
                         input_device_index=capturing_device["index"],
                         stream_callback=callback) as stream:
                 time.sleep(DURATION)
+        except:
+            self.is_recognizing = False #try also here
         finally:
             p.terminate()
         
@@ -198,21 +201,27 @@ class ShazamApp:
         self.animating = False
         print(result) #debug to print whole json for finding values to extract
         self.display_result(result)
+        self.is_recognizing = False #here false assumed recorded.
 
     def start_recognition(self):
-        if self.selected_device.get() != "Select a device": #check for no device selection to not crash the app
-            #it was from previous version, but still thinking if its better to let user choose device
-            #refer. self.selected_device.set("Select a device")
-            self.animating = True
-            self.animate()  # Start animation
-            def recognition_thread():
-                asyncio.set_event_loop(asyncio.new_event_loop())
-                audio_data = self.record_audio()
-                if audio_data is not None:
-                    asyncio.run(self.recognize_song(audio_data))
+        if not self.is_recognizing: # a way to not start again the recognition
+        #hitting again the button resulted in bugged animation and sometimes in unknown error -9999
+            if self.selected_device.get() != "Select a device": #check for no device selection to not crash the app
+                #it was from previous version, but still thinking if its better to let user choose device
+                #refer. self.selected_device.set("Select a device")
+                self.is_recognizing = True #for any reason can the True remain true if any other error happes eg
+                                            #not find a device not validate the wasapi
+                                            #and stack in True . Should look again
+                self.animating = True
+                self.animate()  # Start animation
+                def recognition_thread():
+                    asyncio.set_event_loop(asyncio.new_event_loop())
+                    audio_data = self.record_audio()
+                    if audio_data is not None:
+                        asyncio.run(self.recognize_song(audio_data))
 
-            thread = threading.Thread(target=recognition_thread)
-            thread.start()
+                thread = threading.Thread(target=recognition_thread)
+                thread.start()
 
     def display_result(self, result):
         if "track" in result:
