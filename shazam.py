@@ -40,7 +40,7 @@ class ShazamApp:
         self.root.iconbitmap(resource_path("icon.ico"))
 
         # Fetch and categorize audio devices
-        self.loopback_devices, self.default_device = self.get_audio_devices()
+        self.loopback_devices, self.input_devices, self.default_device = self.get_audio_devices()
 
         # Initialize the Tkinter variable for the selected device
         self.selected_device = tk.StringVar(value="Select a device")
@@ -54,7 +54,20 @@ class ShazamApp:
         elif self.loopback_devices:
             # Set the fallback to the name of the first loopback device
             self.selected_device.set(self.loopback_devices[0][0])  # Access the first element's name
+    
+    def validate_selection(self, event):
+        # Get the current selection from the combobox directly
+        current_selection = self.device_dropdown.get()
+        print(f"Dropdown changed to: {current_selection}")  # Debug statement
 
+        # Check if the selection is valid (not a separator)
+        if "---" not in current_selection:
+            self.selected_device.set(current_selection)
+            print(f"Valid device selected: {self.selected_device.get()}")  # Debug statement
+        else:
+            # Reset to default or prompt selection
+            self.device_dropdown.set("Select a device")
+            print("Invalid selection, reset to default.")  # Debug statement
 
     def create_widgets(self):
         label = ttk.Label(self.root, text="Select Audio Source:")
@@ -62,17 +75,17 @@ class ShazamApp:
 
         # Prepare device list with separators for categories
         loopback_device_names = [device[0] for device in self.loopback_devices]  # Extract names from loopback devices
-        #input_device_names = [device[0] for device in self.input_devices]  # Extract names from input devices
+        input_device_names = [device[0] for device in self.input_devices]  # Extract names from input devices
 
         # Combine the lists with headers for each category
-        device_list = ["---LOOPBACK DEVICES---"] + loopback_device_names
+        device_list = ["---LOOPBACK DEVICES---"] + loopback_device_names + ["---INPUT DEVICES---"] + input_device_names
 
         self.device_dropdown = ttk.Combobox(self.root, textvariable=self.selected_device, values=device_list, state="readonly", width=60)
         self.device_dropdown.pack()
 
 
         # Bind the selection event to validate_selection to handle updates
-        self.device_dropdown.bind("<<ComboboxSelected>>", self.selected_device.set(self.device_dropdown.get()))
+        self.device_dropdown.bind("<<ComboboxSelected>>", self.validate_selection)
 
         original_image = Image.open(resource_path("shaza_logo.png"))
         resized_image = original_image.resize((200, 200), Image.Resampling.LANCZOS)
@@ -82,7 +95,8 @@ class ShazamApp:
         self.recognize_button.pack(pady=20)
 
     def get_device_index_by_name(self, device_name):
-        for device in self.loopback_devices:
+        # Search in both loopback and input devices
+        for device in self.loopback_devices + self.input_devices:
             if device[0] == device_name:  # Compare the name
                 return device[1]  # Return the index
         return None  # Return None if not found
@@ -113,6 +127,7 @@ class ShazamApp:
     def get_audio_devices(self):
         p = pyaudio.PyAudio()
         loopback_devices = []
+        input_devices = []
         default_device = None
         try:
             wasapi_info = p.get_host_api_info_by_type(pyaudio.paWASAPI)
@@ -126,12 +141,14 @@ class ShazamApp:
                     device_entry = [device_info['name'], i]  # Store name and index as a list
                     if device_info.get('isLoopbackDevice', False):
                         loopback_devices.append(device_entry)
+                    else:
+                        input_devices.append(device_entry)
 
         except Exception as e:
             messagebox.showerror("Error", f"Failed to fetch audio devices: {str(e)}")
         finally:
             p.terminate()
-        return loopback_devices, default_device
+        return loopback_devices, input_devices, default_device
 
     def record_audio(self):
         """Captures audio from loopback without saving to a file and returns raw data as NumPy array."""
