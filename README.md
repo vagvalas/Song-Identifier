@@ -24,6 +24,8 @@ build command for Windows:
 
 ```pyinstaller --onefile --windowed --icon=icon.ico --add-data "icon.ico;." --add-data "shaza_logo.png;." --add-data "shaza_anim.gif;." --name "SongIdentifier" shazam.py```
 
+COPY ASSETS FOLDER TO BUILD ELSE GONNA FAIL, COPY TO SAME DIR AS THE SCRIPT
+
 
 ## What it does (~~for now v.0.1~~) v1.0:
 
